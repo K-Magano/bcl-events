@@ -1,23 +1,22 @@
-import EventContent from "@/components/event-detail/event-content";
-import EventLogistics from "@/components/event-detail/event-logistics";
-import EventSummary from "@/components/event-detail/event-summary";
-import ErrorAlert from "@/components/ui/error-alert";
-import { getEventById, getAllEvents } from "../../helpers/api-util";
-
 import { Fragment } from "react";
+
+import { getEventById, getFeaturedEvents } from "../../helpers/api-util";
+import EventSummary from "@/components/event-detail/event-summary";
+import EventLogistics from "@/components/event-detail/event-logistics";
+import EventContent from "@/components/event-detail/event-content";
+import ErrorAlert from "@/components/ui/error-alert";
 
 function EventDetailPage(props) {
   const event = props.selectedEvent; //from async at the bottom
 
-  console.log("e: ", event);
-
   if (!event) {
     return (
-      <ErrorAlert>
-        <h3> Event not found</h3>;
-      </ErrorAlert>
+      <div className="center">
+        <h2>Loading..from [eventid]</h2>
+      </div>
     );
   }
+
   return (
     //all components below were created by the lesson.
     <Fragment>
@@ -26,7 +25,7 @@ function EventDetailPage(props) {
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
-        location={event.location}
+        address={event.location}
         image={event.image}
         imageAlt={event.title}
       />
@@ -39,21 +38,26 @@ function EventDetailPage(props) {
 //context because we need a specific id
 export async function getStaticProps(context) {
   const eventId = context.params.eventId;
-  const event = await getAllEvents(eventId);
+
+  const event = await getEventById(eventId);
+
   return {
     props: {
       selectedEvent: event,
     },
+    revalidate: 30,
   };
 }
 //to help next know what eventid (param values)to look out for
 
 export async function getStaticPaths() {
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
+
   const paths = events.map((event) => ({ params: { eventId: event.id } }));
+
   return {
     paths: paths,
-    fallback: false,
+    fallback: "blocking", //there are more pages than prepared
   };
 }
 
