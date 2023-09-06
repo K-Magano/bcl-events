@@ -13,6 +13,7 @@ function HomePage(props) {
     </Fragment>
   );
 }
+
 export default HomePage;
 
 export async function getStaticProps() {
@@ -21,5 +22,7 @@ export async function getStaticProps() {
     props: {
       events: featuredEvents,
     },
+    //one way of optimizing this page by regenerating the request every 30mns for incomming request.
+    revalidate: 1800,
   };
 }
