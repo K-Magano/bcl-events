@@ -1,17 +1,25 @@
-import { getFeaturedEvents } from "@/dummy-data";
 import EventList from "@/components/events/event-list";
 import EventsSearch from "@/components/events/events-search";
+import { getFeaturedEvents } from "../helpers/api-util";
 import { Fragment } from "react";
 
-function HomePage() {
-  const featuredEvents = getFeaturedEvents();
-
+function HomePage(props) {
   return (
     <Fragment>
-      <h2> BCL Home page</h2>
+      <p> in Pages/ index. using getStaticProps to fetch data</p>
+
       <EventsSearch />
-      <EventList items={featuredEvents} />
+      <EventList items={props.events} />
     </Fragment>
   );
 }
 export default HomePage;
+
+export async function getStaticProps() {
+  const featuredEvents = await getFeaturedEvents();
+  return {
+    props: {
+      events: featuredEvents,
+    },
+  };
+}
