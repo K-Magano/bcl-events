@@ -1,23 +1,29 @@
 import EventList from "@/components/events/event-list";
-import EventsSearch from "@/components/events/events-search";
 import { getFeaturedEvents } from "../helpers/api-util";
 import { Fragment } from "react";
+import Head from "next/head";
 
 function HomePage(props) {
   return (
     <Fragment>
-      <p> in Pages/ index. using getStaticProps to fetch data</p>
+      <Head>
+        <title>BCL Events</title>
+        <meta
+          name="description"
+          content="Find awesome programming events to attend and network"
+        />
+      </Head>
+      <p> In Pages/ index.js using getStaticProps to fetch data</p>
+      <p>I am the "HomePage", 1st page crawlers will find</p>
 
-      <EventsSearch />
       <EventList items={props.events} />
     </Fragment>
   );
 }
 
-export default HomePage;
-
 export async function getStaticProps() {
   const featuredEvents = await getFeaturedEvents();
+
   return {
     props: {
       events: featuredEvents,
@@ -26,3 +32,5 @@ export async function getStaticProps() {
     revalidate: 1800,
   };
 }
+
+export default HomePage;

@@ -1,11 +1,13 @@
 * {
   box-sizing: border-box;
+  margin: 5px;
+  padding: 5px;
 }
 
 body {
   margin: 0;
   font-family: "Times New Roman", Times, serif;
-  color: #414;
+  color: #555545;
   background-color: antiquewhite;
 }
 

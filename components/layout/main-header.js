@@ -7,6 +7,7 @@ function MainHeader() {
       <div className={classes.logo}>
         <Link href="/"> BCL Events</Link>
       </div>
+      <p> We are Links in the layout/main-header</p>
       <nav className={classes.navigation}>
         <ul>
           <li>

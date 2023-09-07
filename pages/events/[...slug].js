@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-
+import Head from "next/head";
 import { getFilteredEvents } from "../../helpers/api-util";
 import EventList from "@/components/events/event-list";
 import ResultsTitle from "@/components/events/results-title";
@@ -34,9 +34,21 @@ function FilteredEventsPage(props) {
     }
   }, [data]);
 
+  let pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta name="description" content={"A list of filtered events"} />
+    </Head>
+  );
+
   if (!loadedEvents) {
     // when it is undefined, which happens when the data is loaded the 1st time
-    return <p className="center" /*in global css*/>Loading.. from slug</p>;
+    return (
+      <Fragment>
+        {pageHeadData}
+        <p className="center">Loading.. from slug</p>;
+      </Fragment>
+    );
   }
 
   const filteredYear = filterData[0];
@@ -47,8 +59,18 @@ function FilteredEventsPage(props) {
   const numYear = +filteredYear;
   const numMonth = +filteredMonth;
 
+  pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`All events for ${numMonth - 1}/${numYear}.`}
+      />
+    </Head>
+  );
+
   if (
-    !isNaN(numYear) ||
+    isNaN(numYear) ||
     isNaN(numMonth) ||
     numYear > 2030 ||
     numYear < 2021 ||
@@ -58,6 +80,7 @@ function FilteredEventsPage(props) {
   ) {
     return (
       <Fragment>
+        {pageHeadData}
         <p>this is in the [...slug]</p>
         <ErrorAlert>
           <p>Wait, No way, please check search dates .. slug </p>
@@ -81,6 +104,7 @@ function FilteredEventsPage(props) {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <Fragment>
+        {pageHeadData}
         <ErrorAlert>
           <p>
             You sure about this SLUG, because I found no events for the chosen
@@ -99,7 +123,10 @@ function FilteredEventsPage(props) {
 
   return (
     <Fragment>
+      {pageHeadData}
       <h2>Filtered Events</h2>
+      <p>pages/events/...[...slug]</p>
+
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </Fragment>
