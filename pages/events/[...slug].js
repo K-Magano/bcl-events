@@ -15,7 +15,7 @@ function FilteredEventsPage(props) {
   //undefined is also logged because of how rout data is extracted,  router runs after the components was render the first time.
 
   const { data, error } = useSWR(
-    "https://section5-datafetching-default-rtdb.firebaseio.com/events.json",
+    "https://bcl-events-default-rtdb.firebaseio.com/events.json",
     (url) => fetch(url).then((res) => res.json())
   );
 

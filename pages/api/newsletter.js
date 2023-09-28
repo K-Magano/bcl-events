@@ -16,9 +16,7 @@ async function handler(request, response) {
     try {
       const client = await connectDatabase();
     } catch (error) {
-      response
-        .status(500)
-        .json({ message: "Connecting to BD Failed. pages/api/newsletter " });
+      response.status(500).json({ message: "Connecting to MongoBD Failed." });
       return;
     }
 
@@ -26,9 +24,7 @@ async function handler(request, response) {
       await insertDocument(client, "newsletter", { email: userEmail });
       client.close();
     } catch (error) {
-      response
-        .status(500)
-        .json({ message: "Inserting Data Failed. pages/api/newsletter " });
+      response.status(500).json({ message: "Inserting Data Failed." });
       return;
     }
 

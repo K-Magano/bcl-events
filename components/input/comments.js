@@ -1,11 +1,14 @@
 import { useState, useEffect, useContext } from "react";
+
 import CommentList from "./comment-list";
 import NewComment from "./new-comment";
 import classes from "./comments.module.css";
+
 import NotificationContext from "@/store/notification-context";
 
 function Comments(props) {
   const { eventId } = props;
+
   const notificationCtx = useContext(NotificationContext);
 
   const [showComments, setShowComments] = useState(false);
@@ -48,10 +51,12 @@ function Comments(props) {
         if (response.ok) {
           return response.json();
         }
+
         return response.json().then((data) => {
           throw new Error(data.message || "Something went wrong");
         });
       })
+
       .then((data) => {
         notificationCtx.showNotification({
           title: "Success!...",
@@ -67,6 +72,7 @@ function Comments(props) {
         });
       });
   }
+
   return (
     <section className={classes.comments}>
       <button onClick={toggleCommentsHandler}>

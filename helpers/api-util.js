@@ -2,7 +2,7 @@
 
 export async function getAllEvents() {
   const response = await fetch(
-    "https://section5-datafetching-default-rtdb.firebaseio.com/events.json"
+    "https://bcl-events-default-rtdb.firebaseio.com/events.json"
   );
   const data = await response.json();
   const events = [];

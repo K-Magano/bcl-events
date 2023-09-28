@@ -11,9 +11,7 @@ async function handler(request, response) {
   try {
     client = await connectDatabase();
   } catch (error) {
-    response
-      .status(500)
-      .json({ message: "Connection to db failed api/comments/eventId" });
+    response.status(500).json({ message: "Connection to db failed" });
     return;
   }
 
@@ -30,7 +28,7 @@ async function handler(request, response) {
     ) {
       response
         .status(422) //422 invalid input Server-side Error
-        .json({ message: "Invalid email address, inside  [eventId" });
+        .json({ message: "Invalid email address" });
       client.close();
       return;
     }
@@ -60,9 +58,7 @@ async function handler(request, response) {
       const documents = await getAllDocuments(client, "comments", { _id: -1 });
       response.status(200).json({ comments: documents }); //comments are from input/comments
     } catch (error) {
-      response
-        .status(500)
-        .json({ message: "Getting comments failed, /api/comments/eventId" });
+      response.status(500).json({ message: "Getting comments failed" });
     }
   }
 

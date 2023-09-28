@@ -29,6 +29,16 @@ const DUMMY_EVENTS = [
     image: "images/extrovert-event.jpg",
     isFeatured: true,
   },
+  {
+    id: "e4",
+    title: "How to Code Validate",
+    description:
+      "Here we will be discussing what we have leant so far till section 9",
+    location: "Phokeng, NW",
+    date: "2023-09-28",
+    image: "images/section9.jpg",
+    isFeatured: true,
+  },
 ];
 
 export function getFeaturedEvents() {
